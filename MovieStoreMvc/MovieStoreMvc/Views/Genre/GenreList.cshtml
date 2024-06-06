@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ksiegarnia.Models.Domain.Genre>
+@{
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4; /* Jasny szary kolor tła */
+        color: #333; /* Ciemnoszary kolor tekstu */
+        margin: 0; /* Usunięcie marginesów */
+        padding: 0; /* Usunięcie wewnętrznych marginesów */
+    }
+
+    .tbl-container {
+        max-width: 800px;
+        margin: 200px; /* Marginesy na górze i dołu dla kontenera tabeli */
+        padding: 20px;
+    }
+
+    h2 {
+        color: #555555; /* Ciemnoszary kolor tekstu nagłówka */
+        text-align: center; /* Wyśrodkowanie tekstu */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px; /* Dodatkowy margines na górze dla tabeli */
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ccc; /* Jasny szary kolor obramowania */
+    }
+
+    th {
+        background-color: #f0f0f0; /* Jasny szary kolor tła nagłówka */
+        color: #555555; /* Ciemnoszary kolor tekstu nagłówka */
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border: 2px solid #555555; /* Ciemnoszary kolor obramowania */
+        border-radius: 5px;
+        background-color: transparent;
+        color: #555555; /* Ciemnoszary kolor tekstu */
+        font-size: 16px;
+        text-decoration: none;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .btn-default:hover {
+        background-color: #555555; /* Ciemnoszary kolor tła po najechaniu myszką */
+        color: #fff; /* Biały kolor tekstu po najechaniu myszką */
+    }
+
+    .btn-danger:hover {
+        background-color: #d32f2f; /* Ciemnoczerwony kolor tła po najechaniu myszką */
+        border-color: #d32f2f; /* Ciemnoczerwony kolor obramowania po najechaniu myszką */
+        color: #fff; /* Biały kolor tekstu po najechaniu myszką */
+    }
+
+    .btn-sec {
+        border-color: #555555; /* Ciemnoszary kolor obramowania */
+        color: #555555; /* Ciemnoszary kolor tekstu */
+    }
+
+        .btn-sec:hover {
+            background-color: #555555; /* Ciemnoszary kolor tła po najechaniu myszką */
+            color: #fff; /* Biały kolor tekstu po najechaniu myszką */
+        }
+
+    .input-container {
+        margin-top: 20px; /* Dodatkowy margines na górze dla kontenera przycisku powrotu */
+        text-align: center; /* Wyśrodkowanie tekstu */
+    }
+</style>
+
+<div class="tbl-container">
+    <h2>Autorzy</h2>
+
+    <table>
+        <tr>
+            <th>Nazwa autora</th>
+            <th>Dostępne opcje</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GenreName</td>
+                <td>
+                    <a href="/Genre/Edit?id=@item.Id" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                    <a onclick="return window.confirm('Are you sure?')" href="/Genre/Delete?id=@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="input-container">
+        <a href="/Genre/Add" class="btn btn-sec">Wróć</a>
+    </div>
+</div>

@@ -1,0 +1,183 @@
+﻿@model ksiegarnia.Models.DTO.MovieListVm
+@{
+    Layout = "_Layout";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .search-bar {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 70%;
+            box-sizing: border-box;
+        }
+
+        .search-bar button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #555555; /* Średni odcień szarości dla tła przycisku */
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            .search-bar button:hover {
+                background-color: #333333; /* Ciemniejszy odcień szarości dla tła przycisku po najechaniu myszką */
+            }
+
+    .btn-default {
+        padding: 10px 15px;
+        border: 2px solid #555555; /* Średni odcień szarości dla obramowania przycisku */
+        border-radius: 5px;
+        background-color: transparent;
+        color: #555555; /* Średni odcień szarości dla tekstu przycisku */
+        font-size: 16px;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+        .btn-default:hover {
+            background-color: #555555; /* Średni odcień szarości dla tła przycisku po najechaniu myszką */
+            color: #fff; /* Biały kolor tekstu przycisku po najechaniu myszką */
+        }
+
+    .movies {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+      .movie-card {
+        width: 250px; /* Szerokość karty filmu */
+        height: 400px; /* Wysokość karty filmu - ustaw ją na odpowiednią wartość, aby dopasować do obrazu */
+        margin: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s;
+        display: flex; /* Użyj flexbox, aby centrować zawartość pionowo */
+        flex-direction: column; /* Ustaw zawartość na kolumnę */
+        position: relative; /* Wymagane do ustawienia białego tła */
+    }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .movie-image {
+        flex-grow: 1; /* Zajmij dostępne miejsce */
+        overflow: hidden; /* Ukryj nadmiarowe fragmenty obrazu */
+        position: relative; /* Konieczne do dodania białego tła */
+    }
+
+    .movie-image img {
+        width: 100%; /* Obraz zajmie całą dostępną szerokość */
+        height: auto; /* Zachowaj proporcje obrazu */
+        object-fit: cover; /* Obraz zostanie przeskalowany, aby wypełnić kontener zachowując proporcje */
+        position: absolute; /* Wymagane, aby obraz był w odpowiednim miejscu */
+        top: 50%; /* Wycentruj obraz pionowo */
+        left: 50%; /* Wycentruj obraz poziomo */
+        transform: translate(-50%, -50%); /* Wycentruj obraz zarówno pionowo, jak i poziomo */
+    }
+
+    .movie-info {
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .pagination {
+        text-align: center;
+    }
+
+        .pagination a {
+            display: inline-block;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            margin: 0 5px;
+            border-radius: 5px;
+            color: #555555; /* Średni odcień szarości dla tekstu paginacji */
+        }
+
+            .pagination a.active {
+                background-color: #555555; /* Średni odcień szarości dla tła aktywnej strony paginacji */
+                color: #fff; /* Biały kolor tekstu dla aktywnej strony paginacji */
+                border-color: #555555; /* Średni odcień szarości dla obramowania aktywnej strony paginacji */
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd; /* Jasny odcień szarości dla tła po najechaniu myszką */
+            }
+
+    /* Dodaj białe tło wokół obrazków */
+    .movie-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #fff; /* Białe tło */
+    }
+</style>
+
+<div class="container">
+    <section class="search-bar">
+        <form method="get" asp-action="Index">
+            <input type="text" name="term" placeholder="szukaj tutaj!">
+            <button type="submit"><i class="fa fa-search"></i></button>
+            <a class="btn-default" href="/Home/Index">Wszystkie</a>
+        </form>
+
+    </section>
+    <section class="movies">
+        @foreach (var movie in Model.MovieList)
+        {
+            <div class="movie-card" onclick="window.location.href='/Home/MovieDetail?movieId=@movie.Id'">
+                <div class="movie-image">
+                    <img src="/Uploads/@movie.MovieImage">
+                </div>
+                <div class="movie-info">
+                    <h4>@movie.Title</h4>
+                    <h4>@movie.GenreNames</h4>
+                    <h4>@movie.ReleaseYear</h4>
+                </div>
+            </div>
+        }
+    </section>
+
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.CurrentPage)
+            {
+                <a href="/Home/Index?currentPage=@i&term=@Model.Term" class="active">@i</a>
+            }
+            else
+            {
+                <a href="/Home/Index?currentPage=@i&term=@Model.Term">@i</a>
+
+            }
+        }
+    </div>
+</div>

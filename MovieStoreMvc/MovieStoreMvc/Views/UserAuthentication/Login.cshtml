@@ -1,0 +1,129 @@
+﻿@model ksiegarnia.Models.DTO.LoginModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        h2 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .input-container {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .input {
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+            text-align: center; /* Tekst wysrodkowany */
+        }
+
+        .error-msg {
+            color: #c00;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .alert {
+            background-color: #fff3cd;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            color: #856404;
+            font-size: 16px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+            background-color: #007bff;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-sec {
+            background-color: #6c757d;
+        }
+
+            .btn:hover,
+            .btn-sec:hover {
+                background-color: #0056b3;
+            }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Logowanie jako moderator</h2>
+        <form asp-action="Login" method="post">
+            <div class="input-container">
+                <label for="Username">Login</label>
+                <input type="text" class="input" asp-for="Username" id="Username">
+                <div class="error-msg">@Html.ValidationMessageFor(model => model.Username)</div>
+            </div>
+
+            <div class="input-container">
+                <label for="Password">Hasło   </label>
+                <input type="password" class="input" asp-for="Password" id="Password">
+                <div class="error-msg">@Html.ValidationMessageFor(model => model.Password)</div>
+            </div>
+
+            @if (TempData["msg"] != null)
+            {
+                <div class="alert">
+                    @TempData["msg"]
+                </div>
+            }
+
+            <div class="input-container">
+                <button class="btn" type="submit">Zaloguj się</button>
+                <button class="btn btn-sec" type="button" onclick="window.location.href='/UserAuthentication/ExternalLogin?provider=Google'">Zaloguj za pomocą Google</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

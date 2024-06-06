@@ -1,0 +1,155 @@
+﻿@model ksiegarnia.Models.Domain.Movie
+@{
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #555555;
+        text-align: center;
+    }
+
+    label {
+        color: #555555;
+    }
+
+    .input-container {
+        margin-bottom: 20px;
+    }
+
+    .input {
+        padding: 12px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        width: calc(400% - 10px); /* Szerokość inputu z uwzględnieniem miejsca na etykietę */
+        box-sizing: border-box;
+    }
+
+    .message-box {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .error {
+        color: #555555; /* Szary kolor dla komunikatów o błędach */
+    }
+
+    .alert {
+        background-color: #e0e0e0; /* Jasnoszary kolor tła dla komunikatów */
+        color: #555555;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        border: 2px solid #555555;
+        border-radius: 5px;
+        background-color: transparent;
+        color: #555555;
+        font-size: 16px;
+        text-decoration: none;
+        margin-right: 10px;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+    }
+
+        .btn:hover {
+            background-color: #555555;
+            color: #fff;
+        }
+
+    .btn-sec {
+        border-color: #555555;
+        color: #555555;
+    }
+
+        .btn-sec:hover {
+            background-color: #555555;
+            color: #fff;
+        }
+</style>
+
+<div class="container">
+    <form class="w-40" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <h2 class="pb-10">Edytuj książkę</h2>
+        <input type="hidden" class="input" asp-for="Id">
+        <input type="hidden" class="input" asp-for="MovieImage">
+
+        <div class="input-container">
+            <label asp-for="Title" class="w-40">Tytuł</label>
+            <input type="text" class="input" asp-for="Title">
+        </div>
+        <div class="message-box pd-x-28 error">
+            <span asp-validation-for="Title"> </span>
+        </div>
+
+        <div class="input-container">
+            <label asp-for="ImageFile" class="w-40">Zdjęcie</label>
+            <input type="file" class="input" asp-for="ImageFile">
+        </div>
+        <div class="message-box pd-x-28 error">
+            <span asp-validation-for="ImageFile"> </span>
+        </div>
+
+        <div class="input-container">
+            <label asp-for="Genres" class="w-40">Autor</label>
+            <select asp-items="Model.MultiGenreList" class="input" asp-for="Genres" multiple>
+                <option value="">--wybierz--</option>
+            </select>
+        </div>
+        <div class="message-box pd-x-28 error">
+            <span asp-validation-for="Genres"> </span>
+        </div>
+
+        <div class="input-container">
+            <label asp-for="ReleaseYear" class="w-40">Rok wydania</label>
+            <input type="text" class="input" asp-for="ReleaseYear">
+        </div>
+        <div class="message-box pd-x-28 error">
+            <span asp-validation-for="ReleaseYear"> </span>
+        </div>
+
+        <div class="input-container">
+            <label asp-for="Cast" class="w-40">Gatunek</label>
+            <input type="text" class="input" asp-for="Cast">
+        </div>
+        <div class="message-box pd-x-28 error">
+            <span asp-validation-for="Cast"> </span>
+        </div>
+
+        <div class="input-container">
+            <label asp-for="Director" class="w-40">Opis</label>
+            <input type="text" class="input" asp-for="Director">
+        </div>
+        <div class="message-box pd-x-28 error">
+            <span asp-validation-for="Director"> </span>
+        </div>
+
+        @if (TempData["msg"] != null)
+        {
+            <div class="alert mb-1">
+                @TempData["msg"]
+            </div>
+        }
+
+        <div class="input-container">
+            <button class="btn btn-default" type="submit">Zapisz</button>
+            <a class="btn btn-sec" href="/Movie/MovieList">Wszystkie książki</a>
+        </div>
+    </form>
+</div>

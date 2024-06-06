@@ -1,0 +1,106 @@
+﻿@model ksiegarnia.Models.Domain.Genre
+@{
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    .w-40 {
+        width: 40%;
+    }
+
+    .input-container {
+        margin-bottom: 200px;
+    }
+
+    .input {
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        width: calc(100% - 120px); /* Szerokość inputu z uwzględnieniem miejsca na etykietę */
+        box-sizing: border-box;
+        background-color: #f8f8f8; /* Jasnoszary kolor tła inputu */
+    }
+
+    .message-box {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .error {
+        color: #d32f2f; /* Ciemnoczerwony kolor dla komunikatów o błędach */
+    }
+
+    .alert {
+        background-color: #e0e0e0; /* Jasnoszary kolor tła dla komunikatów */
+        color: #555555;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        border: 2px solid #555555;
+        border-radius: 5px;
+        background-color: transparent;
+        color: #555555;
+        font-size: 16px;
+        text-decoration: none;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .btn-default:hover {
+        background-color: #555555;
+        color: #fff;
+    }
+
+    .btn-sec {
+        border-color: #555555;
+        color: #555555;
+    }
+
+        .btn-sec:hover {
+            background-color: #555555;
+            color: #fff;
+        }
+
+    /* Dodany kontener formularza o trzykrotnie większej szerokości */
+    .form-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 20px; /* Dodany margines na górze dla kontenera formularza */
+    }
+</style>
+
+<div class="form-container">
+    <!-- Dodany kontener formularza -->
+    <form class="w-40" asp-action="Add" method="post">
+        <h2 class="pb-10">Dodaj autora: </h2>
+        <div class="input-container">
+            <label asp-for="GenreName" class="w-40">Nazwa autora: </label>
+            <input type="text" class="input" asp-for="GenreName">
+        </div>
+        <div class="message-box pd-x-28 error">
+            <span asp-validation-for="GenreName"> </span>
+        </div>
+
+        @if (TempData["msg"] != null)
+        {
+            <div class="alert mb-1">
+                @TempData["msg"]
+            </div>
+        }
+
+        <div class="input-container">
+            <button class="btn btn-default" type="submit">Zapisz</button>
+            <a class="btn btn-sec" href="/Genre/GenreList">Zobacz wszystkich</a>
+        </div>
+    </form>
+</div>
